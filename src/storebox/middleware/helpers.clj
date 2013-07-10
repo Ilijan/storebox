@@ -14,7 +14,7 @@
          :headers {"Content-Type" "text/plain"}
          :body "Something went wrong o_0\nTeam of highly trained monkeys... NO!"}))))
 
-;; TODO: wrap-... methods 
+;; TODO: wrap-... methods for handling different errors with more concrete msgs
 
 (defn wrap-body-copy [handler]
   (fn [{body :body :as request}]
