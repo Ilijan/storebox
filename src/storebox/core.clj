@@ -18,12 +18,16 @@
 (ns storebox.core
   (:use ring.middleware.params
         ring.util.response
+        ring.util.request
         ring.adapter.jetty
         clojure.core        ;;
         compojure.core
         storebox.middleware.helpers
         storebox.middleware.download
+        storebox.middleware.upload
         ))
+
+;; TODO: refactor methods invoked with full name space by including the namespace
 
 (defn extract-api-call [uri]
   (second (clojure.string/split uri #"/")))
@@ -65,9 +69,11 @@
     (download-handler default-root-dir path args))
     ; (response (str path "\n" args "\n" all)))
     ; (file-response path {:root default-root-dir :index-files? false}))
-    
-  (POST ["/upload/:path" :path #".+"] [path & args :as all]
-    )
+
+  (POST ["/upload/:path" :path #".+"] [path & args :as all] ;{body :body} ;
+    (upload-handler default-root-dir path args (:body-bytes all)))
+    ; (response (str path "\n" args "\n" all)))
+    ; (response (str "OK\n" (slurp body))))
 
   ; (not-found "wrong command")
   )
@@ -75,6 +81,8 @@
 (def app
   (-> routes-handler
       wrap-params
+      wrap-body-str
+      wrap-body-copy
       ; wrap-failsafe
       ))
 
