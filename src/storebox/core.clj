@@ -79,7 +79,7 @@
   (POST ["/copy"] [& params :as all]
     (copy-handler default-root-dir params))
     ; (response (str args "\n" all)))
-    
+
   (GET ["/makedir/:path" :path #".+"] [path & args :as all] ;; TODO: Add code for this
     (response (str path "\n" args "\n" all)))
 

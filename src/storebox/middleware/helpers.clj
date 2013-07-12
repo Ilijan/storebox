@@ -20,7 +20,7 @@
   (fn [{body :body :as request}]
     (let [byte-output (java.io.ByteArrayOutputStream.)]
       (clojure.java.io/copy body byte-output)
-      (let [body-copy (java.io.ByteArrayInputStream. (.toByteArray byte-output))
+      (let [body-copy (java.io.ByteArrayInputStream. (.toByteArray byte-output)) ;; REVIEW: threading macro
             body-byte-array (.toByteArray byte-output)
             request-with-new-body (assoc request :body body-copy)
             new-request (assoc request-with-new-body :body-bytes body-byte-array)]
@@ -29,7 +29,7 @@
 (defn wrap-body-str [handler]
   (fn [{bytes :body-bytes :as request}]
     (if bytes
-      (let [body-str (apply str (seq (map char bytes)))
+      (let [body-str (apply str (seq (map char bytes)))       ;; REVIEW: threading macro
             new-request (assoc request :body-str body-str)]
         (handler new-request))
       (handler request))))
