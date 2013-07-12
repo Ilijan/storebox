@@ -25,6 +25,7 @@
         storebox.middleware.helpers
         storebox.middleware.download
         storebox.middleware.upload
+        storebox.middleware.copy
         ))
 
 ;; TODO: refactor methods invoked with full name space by including the namespace
@@ -74,6 +75,13 @@
     (upload-handler default-root-dir path args (:body-bytes all)))
     ; (response (str path "\n" args "\n" all)))
     ; (response (str "OK\n" (slurp body))))
+
+  (POST ["/copy"] [& params :as all]
+    (copy-handler default-root-dir params))
+    ; (response (str args "\n" all)))
+    
+  (GET ["/makedir/:path" :path #".+"] [path & args :as all] ;; TODO: Add code for this
+    (response (str path "\n" args "\n" all)))
 
   ; (not-found "wrong command")
   )
