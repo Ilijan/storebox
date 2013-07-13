@@ -16,6 +16,7 @@
 
 ;; TODO: wrap-... methods for handling different errors with more concrete msgs
 
+;; REFACTORE
 (defn wrap-body-copy [handler]
   (fn [{body :body :as request}]
     (let [byte-output (java.io.ByteArrayOutputStream.)]
