@@ -5,7 +5,7 @@
         ring.adapter.jetty
         clojure.core        ;;
         compojure.core
-        storebox.middleware.helpers
+        storebox.middleware.wrap-helpers
         storebox.middleware.download
         storebox.middleware.upload
         storebox.middleware.copy
