@@ -2,6 +2,8 @@
   (:use ring.util.response
         storebox.paths))
 
+;; REVIEW: wrap responses arround function results
+
 (defn- write-whole-file [root-dir path bytes overwrite]
   (if-not (and overwrite (file-exist? (concatenate-paths root-dir path)))
     (let [src bytes
@@ -14,4 +16,5 @@
   (cond
     (not (seq params)) (write-whole-file root-dir path bytes {:overwrite params})
 
+    ;; TODO: handling other params
     :else (throw (Exception. "cannot handle upload request"))))
