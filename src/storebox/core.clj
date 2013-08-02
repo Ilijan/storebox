@@ -20,7 +20,7 @@
 ;; REVIEW: args one hash only?
 (defroutes routes-handler
   (GET ["/download/:path" :path #".+"] [path & args :as all]
-    (download-handler default-root-dir path args))
+    (download-handler default-root-dir path args))  ;; REVIEW: abstraction (defn handle [handler-fn] (GET [...] [& args] (handler-fn args)))
 
   (POST ["/upload/:path" :path #".+"] [path & args :as all] ;{body :body} ;
     (upload-handler default-root-dir path args (:body-bytes all)))
