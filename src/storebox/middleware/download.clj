@@ -2,6 +2,8 @@
   (:use ring.util.response
         storebox.paths))
 
+;; REVIEW: wrap responses arround bytes return from the functions
+
 (defn parse-int [str]
   (Integer/parseInt str))
 
@@ -20,9 +22,9 @@
 
 (defn download-handler [root-dir path {offset "offset" length "length" :as params}]
   (cond
-    (not (seq params)) (send-the-whole-file root-dir path) 
-    
-    (and offset length) 
+    (not (seq params)) (send-the-whole-file root-dir path)
+
+    (and offset length)
       (send-chunked-file root-dir path (parse-int offset) (parse-int length)) ;; REVIEW abdstraction for creating one path from root-dir and path
 
     :else (throw (Exception. "cannot handle download request"))))
