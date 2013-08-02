@@ -32,7 +32,9 @@
 
 (defn lock-file [channel]
   (.lock channel))
-  
+
+;; TODO: try lock when reading
+
 ; (defn write-channel-part [channel offset bytes])
 
 ;; REVIEW: locking
