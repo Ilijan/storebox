@@ -5,7 +5,7 @@
   (-> file as-file .delete))
 
 (defn- dir-empty? [^java.io.File dir]
-  (= 0 (count (file-seq dir))))
+  (not (nil? (first (file-seq dir)))))
 
 ;; FIXME: to use abstraction storebox.paths/subsequent-file-seq
 (defn- empty-dir [^java.io.File dir]
