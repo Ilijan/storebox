@@ -21,7 +21,7 @@
       (if create-dirs
         (do
           (when-not (make-parents to-file)
-            (throw (Exception. "cannot create all directories")))
+            (throw (Exception. "cannot create all parents directories")))
           (operation from-file to-file))
         (if (directory-exist? (.getParentFile to-file))
           (operation from-file to-file)
