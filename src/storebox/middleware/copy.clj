@@ -3,7 +3,7 @@
         clojure.java.io
         storebox.paths))
 
-;; REFACTOR: abstraction for files and directories defprotocl/defmulti
+;; REFACTOR: abstraction for files and directories defprotocol/defmulti
 
 ;; NOTE: using this 2 functions instead of destruction
 ;;       because parameters of type string not boolean
