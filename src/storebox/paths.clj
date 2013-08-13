@@ -28,7 +28,7 @@
 (defmethod file-exist? String
   [path]
   (let [file (clojure.java.io/as-file path)]
-    (and (.exists file) (.isFile file))))
+    (and (.exists file) (.isFile file))))       ;; FIXME: .isFile checks for existence
 
 (defmethod file-exist? java.io.File
   [file]
@@ -41,7 +41,7 @@
 (defmethod directory-exist? String
   [path]
   (let [file (clojure.java.io/as-file path)]
-    (and (.exists file) (.isDirectory file))))
+    (and (.exists file) (.isDirectory file))))    ;; FIXME: .isFile checks for existence
 
 (defmethod directory-exist? java.io.File
   [file]
