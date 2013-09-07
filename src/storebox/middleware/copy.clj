@@ -51,8 +51,8 @@
   (apply exec-file-op copy-dir-content args))
 
 (defn copy-handler [root-dir {from "from_path" to "to_path" :as params}]
-  (let [from (concatenate-paths root-dir from)
-        to (concatenate-paths root-dir to)]
+  (let [from-path (concatenate-paths root-dir from)
+        to-path (concatenate-paths root-dir to)]
     (cond
       (directory-exist? from-path) (copy-dir from-path to-path (overwrite params) (create-dirs params))
 

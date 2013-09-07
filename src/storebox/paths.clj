@@ -1,5 +1,6 @@
 (ns storebox.paths
-  (:require (clojure [string :as str])))
+  (:require [clojure.string :as str]
+            [clojure.java.io :as io]))
 
 ;;
 (defmulti path-to-str
@@ -13,13 +14,18 @@
   [path]
   (.getPath path))
 
+(defn trim-slashes [str slash]
+  (loop [last-string (str/replace str "\\" "/")]
+    (let [current-string (str/replace last-string "//" "/")]
+      (if (= current-string last-string)
+        (str/replace current-string "/" java.io.File/separator)
+        (recur current-string)))))
+
 (defn concatenate-paths [& args]
-  (let [path-separator-pattern (re-pattern (str java.io.File/separator "+"))] ;; REVIEW: windows back-slash ?!?
-    (-> (map path-to-str args)
-        (str/join java.io.File/separator) ;; FIXME: java.io.File/separator
-        (str/replace "." "")
-        ; (str/replace "\\" "/")  ; wtf errors
-        (str/replace path-separator-pattern java.io.File/separator))))
+  (-> (str/join java.io.File/separator (map path-to-str args))
+      (str/replace ".." "")
+      (str/replace "\\" "/")  ; wtf errors
+      (trim-slashes java.io.File/separator)))
 
 ;;
 (defmulti file-exist?

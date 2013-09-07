@@ -11,16 +11,15 @@
         storebox.middleware.copy
         storebox.middleware.makedir
         storebox.middleware.move
-        ))
-
-;; TODO: refactor methods invoked with full name space by including the namespace
+        storebox.middleware.delete))
 
 (def default-root-dir ".")
 
 ;; REVIEW: args one hash only?
+;; REVIEW: abstraction (defn handle [handler-fn] (GET [...] [& args] (handler-fn args)))
 (defroutes routes-handler
   (GET ["/download/:path" :path #".+"] [path & args :as all]
-    (download-handler default-root-dir path args))  ;; REVIEW: abstraction (defn handle [handler-fn] (GET [...] [& args] (handler-fn args)))
+    (download-handler default-root-dir path args))
 
   (POST ["/upload/:path" :path #".+"] [path & args :as all] ;{body :body} ;
     (upload-handler default-root-dir path args (:body-bytes all)))

@@ -1,7 +1,8 @@
 (ns storebox.middleware.delete
-  (:use storebox.paths))
+  (:use clojure.java.io
+        storebox.paths))
 
-(defn- delete-file [file]
+(defn- delete-file-str [file]
   (-> file as-file .delete))
 
 (defn- dir-empty? [^java.io.File dir]
@@ -13,14 +14,14 @@
     (cond
       (directory-exist? file) (empty-dir file)
 
-      (file-exist? file) (delete-file file)
+      (file-exist? file) (delete-file-str file)
 
       :else (throw (Exception. "on delete: unsupported file type")))))
 
 (defn- delete-directory [directory]
-  (let [dir (as-file dir)]
+  (let [dir (as-file directory)]
     (if (dir-empty? dir)
-      (delete-file dir)
+      (delete-file-str dir)
       (empty-dir dir))))
 
 (defn delete-handler [root-dir path params]
@@ -28,6 +29,6 @@
     (cond ;; REFACTOR: this cond occurs in empty-dir, copy-dir-content, copy-handler,... in storebox.middleware.move
       (directory-exist? file) (empty-dir file)
 
-      (file-exist? file) (delete-file file)
+      (file-exist? file) (delete-file-str file)
 
       :else (throw (Exception. "on delete: unsupported file type")))))

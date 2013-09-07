@@ -1,5 +1,6 @@
 (ns storebox.middleware.makedir
-  (:use clojure.java.io))
+  (:use clojure.java.io
+        storebox.paths))
 
 (defn makedir-handler [root-dir path {create-dirs "create_dirs"}]
   (let [dir-path (-> (concatenate-paths root-dir path)
